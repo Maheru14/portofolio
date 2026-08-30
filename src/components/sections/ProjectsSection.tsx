@@ -82,13 +82,13 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
               </div>
 
               {/* Right/Bottom: Graphic Area */}
-              <motion.div layoutId={`project-image-container-${project.id}`} className="w-full md:w-[45%] h-64 md:h-auto bg-[#F4F8F9] flex items-end justify-center p-8 pb-0 overflow-hidden relative shrink-0">
-                <div className="w-[90%] h-[90%] bg-white rounded-t-2xl shadow-lg overflow-hidden transform transition-transform duration-500 group-hover:-translate-y-4">
+              <motion.div layoutId={`project-image-container-${project.id}`} className="w-full md:w-[48%] min-h-[260px] md:min-h-[340px] bg-[#F4F8F9] flex items-center justify-center p-6 md:p-8 overflow-hidden relative shrink-0">
+                <div className="w-full h-full max-h-[300px] bg-white rounded-2xl md:rounded-[22px] shadow-[0_8px_30px_rgba(0,22,25,0.06)] border border-[#001619]/5 overflow-hidden flex items-center justify-center transform transition-transform duration-500 group-hover:scale-[1.02]">
                   {primaryImage ? (
-                    <motion.img layoutId={`project-img-${project.id}-0`} src={primaryImage} alt={project.title} className="w-full h-full object-cover object-top" />
+                    <motion.img layoutId={`project-img-${project.id}-0`} src={primaryImage} alt={project.title} className="w-full h-full object-cover object-center" />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-[#C7F8FE]/30 to-[#99E1D9]/20 flex items-center justify-center">
-                      <span className="text-[#001619]/20 font-bold display-font text-2xl">{project.title}</span>
+                    <div className="w-full h-full bg-gradient-to-br from-[#C7F8FE]/30 to-[#99E1D9]/20 flex items-center justify-center p-6">
+                      <span className="text-[#001619]/30 font-bold display-font text-xl text-center">{project.title}</span>
                     </div>
                   )}
                 </div>
