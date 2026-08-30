@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "context-compression": {
+      "source": "guanyang/antigravity-skills",
+      "sourceType": "github",
+      "skillPath": "skills/context-compression/SKILL.md",
+      "computedHash": "1d6e5aa2442fa46c1be6803b96cd7530535fd66f845faf28bad52fdf071158cf"
+    }
+  }
+}
