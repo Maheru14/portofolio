@@ -82,8 +82,12 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
               </div>
 
               {/* Right/Bottom: Graphic Area */}
-              <motion.div layoutId={`project-image-container-${project.id}`} className="w-full md:w-[48%] min-h-[260px] md:min-h-[340px] bg-[#F4F8F9] flex items-center justify-center p-6 md:p-8 overflow-hidden relative shrink-0">
-                <div className="w-full h-full max-h-[300px] bg-white rounded-2xl md:rounded-[22px] shadow-[0_8px_30px_rgba(0,22,25,0.06)] border border-[#001619]/5 overflow-hidden flex items-center justify-center transform transition-transform duration-500 group-hover:scale-[1.02]">
+              <motion.div layoutId={`project-image-container-${project.id}`} className="w-full md:w-[48%] min-h-[260px] md:min-h-[340px] bg-gradient-to-br from-[#F4F8F9] to-[#E8F2F4] flex items-center justify-center p-6 md:p-8 overflow-hidden relative shrink-0">
+                {/* Decorative glowing background elements */}
+                <div className="absolute top-0 right-0 w-48 h-48 bg-[#50E8F4]/20 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 transition-transform duration-700 group-hover:scale-150" />
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#99E1D9]/20 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3 transition-transform duration-700 group-hover:scale-150" />
+
+                <div className="relative z-10 w-full h-full max-h-[300px] bg-white rounded-2xl md:rounded-[22px] shadow-[0_8px_30px_rgba(0,22,25,0.06)] border border-[#001619]/5 overflow-hidden flex items-center justify-center transform transition-transform duration-500 group-hover:scale-[1.02]">
                   {primaryImage ? (
                     <motion.img layoutId={`project-img-${project.id}-0`} src={primaryImage} alt={project.title} className="w-full h-full object-cover object-center" />
                   ) : (
@@ -146,8 +150,12 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
                 <div className="max-w-4xl mx-auto flex flex-col gap-10">
                   
                   {/* Gallery */}
-                  <motion.div layoutId={`project-image-container-${selectedProject.id}`} className="w-full bg-[#F4F8F9] rounded-[24px] md:rounded-[32px] overflow-hidden p-2 md:p-4">
-                    <div className="relative aspect-video w-full rounded-[16px] md:rounded-[24px] overflow-hidden bg-white shadow-sm border border-[#001619]/5 group">
+                  <motion.div layoutId={`project-image-container-${selectedProject.id}`} className="relative w-full bg-gradient-to-br from-[#F4F8F9] to-[#E8F2F4] rounded-[24px] md:rounded-[32px] overflow-hidden p-3 md:p-5">
+                    {/* Decorative glowing background elements */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-[#50E8F4]/20 rounded-full blur-3xl transform translate-x-1/4 -translate-y-1/4" />
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#99E1D9]/20 rounded-full blur-3xl transform -translate-x-1/4 translate-y-1/4" />
+
+                    <div className="relative z-10 aspect-video w-full rounded-[16px] md:rounded-[24px] overflow-hidden bg-white shadow-sm border border-[#001619]/5 group">
                       
                       {(() => {
                         const images = [selectedProject.image_url, ...(selectedProject.gallery_urls || [])].filter(Boolean) as string[];
