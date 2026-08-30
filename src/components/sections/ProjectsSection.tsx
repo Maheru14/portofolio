@@ -38,20 +38,26 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
 
           return (
             <motion.div
-              layoutId={`project-container-${project.id}`}
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: i * 0.1 }}
               onClick={() => setSelectedId(project.id)}
-              className={`group flex flex-col md:flex-row bg-white rounded-[32px] overflow-hidden border border-[#001619]/5 cursor-pointer transition-all duration-300 min-h-[350px] ${
+              className={`relative group flex flex-col cursor-pointer transition-all duration-300 min-h-[350px] rounded-[32px] ${
                 isDimmed ? 'opacity-30 scale-[0.98]' : 'hover:shadow-xl shadow-sm'
               }`}
             >
-              {/* Left/Top: Text Info */}
-              <div className="p-10 md:p-12 flex flex-col flex-1 items-start text-left justify-center">
-                <motion.div layoutId={`project-meta-${project.id}`} className="flex items-center gap-3 mb-4">
+              {/* Morphing Background */}
+              <motion.div 
+                layoutId={`project-bg-${project.id}`}
+                className="absolute inset-0 bg-white rounded-[32px] z-0"
+              />
+
+              <div className="relative z-10 flex flex-col md:flex-row w-full flex-1 overflow-hidden rounded-[32px] border border-[#001619]/15">
+                {/* Left/Top: Text Info */}
+                <div className="p-10 md:p-12 flex flex-col flex-1 items-start text-left justify-center">
+                  <div className="flex items-center gap-3 mb-4">
                   {project.category && (
                     <span className="text-[10px] font-bold uppercase tracking-widest text-[#001619]/40">{project.category}</span>
                   )}
@@ -59,17 +65,17 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
                   {project.year && (
                     <span className="text-[10px] font-bold uppercase tracking-widest text-[#001619]/40">{project.year}</span>
                   )}
-                </motion.div>
+                </div>
                 
-                <motion.h3 layoutId={`project-title-${project.id}`} className="display-font text-3xl font-bold text-[#001619] mb-4">
+                <h3 className="display-font text-3xl font-bold text-[#001619] mb-4">
                   {project.title}
-                </motion.h3>
+                </h3>
                 
-                <motion.p layoutId={`project-desc-${project.id}`} className="text-[#001619]/50 text-base leading-relaxed mb-8 max-w-md line-clamp-3">
+                <p className="text-[#001619]/50 text-base leading-relaxed mb-8 max-w-md line-clamp-3">
                   {project.description}
-                </motion.p>
+                </p>
                 
-                <motion.div layoutId={`project-tech-${project.id}`} className="flex gap-3 flex-wrap mt-auto">
+                <div className="flex gap-3 flex-wrap mt-auto">
                   {project.tech_stack?.slice(0,4).map(tech => (
                     <span key={tech} className="px-3 py-1.5 bg-[#F4F8F9] text-[#001619] text-xs font-bold rounded-lg">{tech}</span>
                   ))}
@@ -78,7 +84,7 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
                       +{(project.tech_stack?.length || 0) - 4}
                     </span>
                   )}
-                </motion.div>
+                </div>
               </div>
 
               {/* Right/Bottom: Graphic Area */}
@@ -97,8 +103,9 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
                   )}
                 </div>
               </motion.div>
-            </motion.div>
-          );
+            </div>
+          </motion.div>
+        );
         })}
       </div>
 
@@ -116,25 +123,34 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
             />
 
             {/* Expanded Card */}
-            <motion.div
-              layoutId={`project-container-${selectedProject.id}`}
-              className="bg-white w-full max-w-6xl max-h-[95vh] rounded-[32px] md:rounded-[40px] overflow-hidden flex flex-col relative z-10 shadow-2xl border border-white/50"
-            >
-              {/* Top Bar - sticky for scrolling */}
-              <div className="flex justify-between items-start p-6 md:p-10 pb-0 shrink-0">
-                <div>
-                  <motion.div layoutId={`project-meta-${selectedProject.id}`} className="flex items-center gap-3 mb-2">
-                    {selectedProject.category && (
-                      <span className="px-3 py-1 bg-[#F4F8F9] rounded-full text-[10px] font-bold uppercase tracking-widest text-[#001619]">{selectedProject.category}</span>
-                    )}
-                    {selectedProject.year && (
-                      <span className="px-3 py-1 bg-[#F4F8F9] rounded-full text-[10px] font-bold uppercase tracking-widest text-[#001619]">{selectedProject.year}</span>
-                    )}
-                  </motion.div>
-                  <motion.h3 layoutId={`project-title-${selectedProject.id}`} className="display-font text-3xl md:text-5xl font-bold text-[#001619]">
-                    {selectedProject.title}
-                  </motion.h3>
-                </div>
+            <div className="relative w-full max-w-6xl max-h-[95vh] flex flex-col z-10">
+              
+              {/* Morphing Background */}
+              <motion.div 
+                layoutId={`project-bg-${selectedProject.id}`}
+                className="absolute inset-0 bg-white rounded-[32px] md:rounded-[40px] shadow-2xl border border-white/50"
+              />
+
+              {/* Content */}
+              <motion.div 
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.15 } }}
+                className="relative z-10 flex flex-col w-full h-full overflow-hidden rounded-[32px] md:rounded-[40px]"
+              >
+                {/* Top Bar - sticky for scrolling */}
+                <div className="flex justify-between items-start p-6 md:p-10 pb-0 shrink-0">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      {selectedProject.category && (
+                        <span className="px-3 py-1 bg-[#F4F8F9] rounded-full text-[10px] font-bold uppercase tracking-widest text-[#001619]">{selectedProject.category}</span>
+                      )}
+                      {selectedProject.year && (
+                        <span className="px-3 py-1 bg-[#F4F8F9] rounded-full text-[10px] font-bold uppercase tracking-widest text-[#001619]">{selectedProject.year}</span>
+                      )}
+                    </div>
+                    <h3 className="display-font text-3xl md:text-5xl font-bold text-[#001619]">
+                      {selectedProject.title}
+                    </h3>
+                  </div>
                 
                 <button
                   onClick={() => setSelectedId(null)}
@@ -225,22 +241,22 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
 
                   {/* Tech Stack */}
                   <div>
-                    <motion.div layoutId={`project-tech-${selectedProject.id}`} className="flex gap-2 flex-wrap">
+                    <div className="flex gap-2 flex-wrap">
                       {selectedProject.tech_stack?.map(tech => (
                         <span key={tech} className="px-3 py-1.5 bg-[#F4F8F9] text-[#001619] text-sm font-bold rounded-xl border border-[#001619]/5">
                           {tech}
                         </span>
                       ))}
-                    </motion.div>
+                    </div>
                   </div>
 
                   {/* Long Description */}
                   {(selectedProject.long_description || selectedProject.description) && (
                     <div className="flex flex-col gap-4">
                       <h4 className="text-xl font-bold text-[#001619]">Tentang Proyek Ini</h4>
-                      <motion.p layoutId={`project-desc-${selectedProject.id}`} className="text-[#001619]/70 leading-relaxed font-medium whitespace-pre-line text-lg">
+                      <p className="text-[#001619]/70 leading-relaxed font-medium whitespace-pre-line text-lg">
                         {selectedProject.long_description || selectedProject.description}
-                      </motion.p>
+                      </p>
                     </div>
                   )}
 
@@ -289,7 +305,8 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
               </div>
             </motion.div>
           </div>
-        )}
+        </div>
+      )}
       </AnimatePresence>
 
     </section>

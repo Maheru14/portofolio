@@ -1,0 +1,96 @@
+"use client";
+import React, { useRef } from "react";
+import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
+
+export const ContainerScroll = ({
+  titleComponent,
+  children,
+}: {
+  titleComponent?: string | React.ReactNode;
+  children: React.ReactNode;
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // offset: ["start start", "end start"] means animation progresses as the container scrolls from the top to out of view
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
+
+  const scaleDimensions = () => {
+    return isMobile ? [1, 0.85] : [1, 0.9];
+  };
+
+  // Start flat (0), tilt away (15) as we scroll down
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 20]);
+  const scale = useTransform(scrollYProgress, [0, 1], scaleDimensions());
+  const translate = useTransform(scrollYProgress, [0, 1], [0, -50]);
+
+  return (
+    <div
+      className="w-full flex items-start justify-center relative p-2 md:p-8"
+      ref={containerRef}
+    >
+      <div
+        className="w-full relative"
+        style={{
+          perspective: "1200px",
+        }}
+      >
+        {titleComponent && <Header translate={translate} titleComponent={titleComponent} />}
+        <Card rotate={rotate} translate={translate} scale={scale}>
+          {children}
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+export const Header = ({ translate, titleComponent }: any) => {
+  return (
+    <motion.div
+      style={{
+        translateY: translate,
+      }}
+      className="max-w-5xl mx-auto text-center mb-10"
+    >
+      {titleComponent}
+    </motion.div>
+  );
+};
+
+export const Card = ({
+  rotate,
+  scale,
+  children,
+}: {
+  rotate: MotionValue<number>;
+  scale: MotionValue<number>;
+  translate: MotionValue<number>;
+  children: React.ReactNode;
+}) => {
+  return (
+    <motion.div
+      style={{
+        rotateX: rotate,
+        scale,
+      }}
+      className="w-full mx-auto relative z-10 will-change-transform origin-top"
+    >
+      {children}
+    </motion.div>
+  );
+};
