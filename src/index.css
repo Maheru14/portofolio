@@ -71,4 +71,31 @@
       }
     }
   }
+
+  /* Chrome performance optimizations for heavy background blurs */
+  .bg-blob-heavy {
+    filter: blur(24px);
+    will-change: transform;
+    transform: translateZ(0);
+  }
+  
+  .bg-blob-medium {
+    filter: blur(16px);
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  .glass-overlay-dark {
+    background-color: rgba(0, 22, 25, 0.75);
+  }
+
+  @supports (background: -webkit-named-image(i)) {
+    .bg-blob-heavy { filter: blur(100px); }
+    .bg-blob-medium { filter: blur(64px); }
+    .glass-overlay-dark {
+      background-color: rgba(0, 22, 25, 0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  }
 }

@@ -51,8 +51,8 @@ export const ExperienceContainer = ({ experiences }: { experiences: Experience[]
       <div className="relative w-full bg-white/90 glass-effect rounded-[40px] p-8 md:p-16 shadow-[0_30px_60px_-15px_rgba(0,22,25,0.1),0_10px_30px_-10px_rgba(0,22,25,0.05),inset_0_1px_2px_rgba(255,255,255,1)] border border-[#001619]/10 overflow-hidden">
         
         {/* Decorative Background Blobs for the Outer Card */}
-        <div className="hidden md:block absolute top-[-10%] right-[-5%] w-[40%] h-[40%] rounded-full bg-gradient-to-br from-[#50E8F4]/30 to-[#C7F8FE]/20 blur-[100px] pointer-events-none -z-10" />
-        <div className="hidden md:block absolute bottom-[-10%] left-[-5%] w-[50%] h-[50%] rounded-full bg-gradient-to-tr from-[#99E1D9]/30 to-transparent blur-[120px] pointer-events-none -z-10" />
+        <div className="hidden md:block absolute top-[-10%] right-[-5%] w-[40%] h-[40%] rounded-full bg-gradient-to-br from-[#50E8F4]/30 to-[#C7F8FE]/20 bg-blob-heavy pointer-events-none -z-10" />
+        <div className="hidden md:block absolute bottom-[-10%] left-[-5%] w-[50%] h-[50%] rounded-full bg-gradient-to-tr from-[#99E1D9]/30 to-transparent bg-blob-heavy pointer-events-none -z-10" />
 
         {/* Subtle Grid Overlay */}
         <div className="hidden md:block absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMCwgMjIsIDI1LCAwLjA0KSIvPjwvc3ZnPg==')] opacity-40 pointer-events-none -z-10" />
