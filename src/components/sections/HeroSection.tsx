@@ -68,7 +68,7 @@ export const HeroSection = ({ profile }: HeroProps) => {
       <div className={`absolute bottom-[20%] right-[10%] w-96 h-96 bg-[#99E1D9]/30 rounded-full filter blur-xl md:blur-[100px] opacity-70 ${canRenderHeavyEffects ? 'mix-blend-multiply' : ''}`} />
 
       <ContainerScroll>
-        <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1400px] mx-auto gap-16 lg:gap-12 bg-white/70 md:bg-white/10 md:backdrop-blur-md border border-white/20 p-8 lg:p-16 rounded-[3rem] shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_rgba(0,0,0,0.05)] relative z-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1400px] mx-auto gap-16 lg:gap-12 bg-white/70 transition-all duration-300 glass-effect border border-white/20 p-8 lg:p-16 rounded-[3rem] shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_rgba(0,0,0,0.05)] relative z-10">
           
           {/* Left: Text Content */}
           <motion.div 

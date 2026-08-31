@@ -48,7 +48,7 @@ export const ExperienceContainer = ({ experiences }: { experiences: Experience[]
 
   return (
     <section id="experience" className="w-full scroll-mt-32">
-      <div className="relative w-full bg-white/90 md:bg-white/60 md:backdrop-blur-3xl rounded-[40px] p-8 md:p-16 shadow-[0_30px_60px_-15px_rgba(0,22,25,0.1),0_10px_30px_-10px_rgba(0,22,25,0.05),inset_0_1px_2px_rgba(255,255,255,1)] border border-[#001619]/10 overflow-hidden">
+      <div className="relative w-full bg-white/90 glass-effect rounded-[40px] p-8 md:p-16 shadow-[0_30px_60px_-15px_rgba(0,22,25,0.1),0_10px_30px_-10px_rgba(0,22,25,0.05),inset_0_1px_2px_rgba(255,255,255,1)] border border-[#001619]/10 overflow-hidden">
         
         {/* Decorative Background Blobs for the Outer Card */}
         <div className="hidden md:block absolute top-[-10%] right-[-5%] w-[40%] h-[40%] rounded-full bg-gradient-to-br from-[#50E8F4]/30 to-[#C7F8FE]/20 blur-[100px] pointer-events-none -z-10" />
@@ -66,7 +66,7 @@ export const ExperienceContainer = ({ experiences }: { experiences: Experience[]
           <div 
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="flex p-1.5 hover:p-2 bg-[#F4F8F9] md:bg-[#F4F8F9]/60 md:backdrop-blur-md md:saturate-150 rounded-full w-max relative shadow-[inset_0_1px_2px_rgba(255,255,255,1),inset_0_-1px_1px_rgba(0,22,25,0.05),0_4px_15px_rgba(0,22,25,0.05)] border border-[#001619]/10 transition-all duration-700"
+            className="flex p-1.5 hover:p-2 bg-[#F4F8F9] glass-effect rounded-full w-max relative shadow-[inset_0_1px_2px_rgba(255,255,255,1),inset_0_-1px_1px_rgba(0,22,25,0.05),0_4px_15px_rgba(0,22,25,0.05)] border border-[#001619]/10 transition-all duration-700"
             style={{
               transform: `scale(${isHovered ? 1.02 : 1})`,
               transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)",

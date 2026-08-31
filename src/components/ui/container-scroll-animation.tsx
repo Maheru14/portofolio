@@ -89,7 +89,7 @@ export const Card = ({
         rotateX: rotate,
         scale,
       }}
-      className="w-full mx-auto relative z-10 will-change-transform origin-top"
+      className="w-full mx-auto relative z-10 origin-top"
     >
       {children}
     </motion.div>
