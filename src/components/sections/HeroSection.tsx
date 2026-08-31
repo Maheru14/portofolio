@@ -13,7 +13,7 @@ export const HeroSection = ({ profile }: HeroProps) => {
   const lastName = nameParts.slice(1).join(' ');
 
   return (
-    <section id="profile" className="relative left-1/2 right-1/2 -mx-[50vw] w-screen overflow-hidden bg-gradient-to-b from-[#A5E3E9] via-[#C6E8ED] to-white">
+    <section id="profile" className="relative left-1/2 right-1/2 -mx-[50vw] w-screen overflow-hidden bg-gradient-to-b from-white via-[#A5E3E9] to-white">
       
       {/* Decorative Glowing Orbs behind the glass */}
       <div className="absolute top-[15%] left-[10%] w-[40rem] h-[40rem] bg-[#50E8F4]/40 rounded-full mix-blend-multiply filter blur-[100px] animate-pulse" style={{ animationDuration: '6s' }} />
@@ -30,8 +30,8 @@ export const HeroSection = ({ profile }: HeroProps) => {
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{ 
-          maskImage: "linear-gradient(to bottom, black 75%, transparent 100%)", 
-          WebkitMaskImage: "linear-gradient(to bottom, black 75%, transparent 100%)" 
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 80%, transparent 100%)", 
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 80%, transparent 100%)" 
         }}
       >
         <div 

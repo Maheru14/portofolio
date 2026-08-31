@@ -118,9 +118,9 @@ export default function Navbar() {
             <div 
               className="absolute -inset-[24px]"
               style={{
-                background: 'rgba(255, 255, 255, 0.15)',
-                backdropFilter: 'blur(8px) saturate(130%)',
-                WebkitBackdropFilter: 'blur(8px) saturate(130%)',
+                background: 'rgba(255, 255, 255, 0.45)',
+                backdropFilter: 'blur(24px) saturate(150%)',
+                WebkitBackdropFilter: 'blur(24px) saturate(150%)',
                 filter: 'url(#liquid-glass)',
               }}
             />
@@ -200,9 +200,9 @@ export default function Navbar() {
               <div 
                 className="absolute inset-0 rounded-3xl pointer-events-none"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.12)',
-                  backdropFilter: 'blur(20px) saturate(180%)',
-                  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                  background: 'rgba(255, 255, 255, 0.45)',
+                  backdropFilter: 'blur(32px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(32px) saturate(180%)',
                   boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.5), inset 0 -1px 1px rgba(0,0,0,0.1), 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08)',
                 }}
               />
