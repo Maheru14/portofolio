@@ -55,3 +55,20 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+@layer utilities {
+  .glass-effect {
+    /* Fallback (Chrome) */
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  @supports (background: -webkit-named-image(i)) {
+    @media (min-width: 768px) {
+      .glass-effect {
+        background-color: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+    }
+  }
+}

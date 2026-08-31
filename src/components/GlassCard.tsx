@@ -18,7 +18,7 @@ export default function GlassCard({
   return (
     <div
       className={cn(
-        'rounded-3xl border border-white/20 bg-white/90 md:bg-white/70 md:backdrop-blur-md transition-all duration-300',
+        'rounded-3xl border border-white/20 bg-white/90 transition-all duration-300 glass-effect',
         !noPadding && 'p-6',
         hover && 'hover:border-white/40 hover:shadow-xl',
         className
