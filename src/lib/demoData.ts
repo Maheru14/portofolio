@@ -201,6 +201,6 @@ export const demoSocialLinks: SocialLink[] = [
 ];
 
 export function isSupabaseConfigured(): boolean {
-  const url = import.meta.env.VITE_SUPABASE_URL;
+  const url = import.meta.env.VITE_SUPABASE_URL || 'https://ichcqbtdkkhrerpzpkza.supabase.co';
   return Boolean(url && url !== 'https://placeholder.supabase.co' && !url.includes('placeholder'));
 }
