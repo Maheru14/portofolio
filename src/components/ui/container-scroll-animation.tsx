@@ -18,15 +18,18 @@ export const ContainerScroll = ({
   });
 
   const [isMobile, setIsMobile] = React.useState(false);
+  const [isSafari, setIsSafari] = React.useState(true);
 
   React.useEffect(() => {
-    const checkMobile = () => {
+    const checkEnvironment = () => {
       setIsMobile(window.innerWidth <= 768);
+      const isBrowserSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      setIsSafari(isBrowserSafari);
     };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
+    checkEnvironment();
+    window.addEventListener("resize", checkEnvironment);
     return () => {
-      window.removeEventListener("resize", checkMobile);
+      window.removeEventListener("resize", checkEnvironment);
     };
   }, []);
 
@@ -34,10 +37,12 @@ export const ContainerScroll = ({
     return isMobile ? [1, 0.85] : [1, 0.9];
   };
 
-  // Start flat (0), tilt away (15) as we scroll down
-  const rotate = useTransform(scrollYProgress, [0, 1], isMobile ? [0, 0] : [0, 20]);
-  const scale = useTransform(scrollYProgress, [0, 1], isMobile ? [1, 1] : scaleDimensions());
-  const translate = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  // Start flat (0), tilt away (15) as we scroll down. Disable on non-Safari (Chrome) to save CPU/GPU.
+  const disableAnimation = isMobile || !isSafari;
+  
+  const rotate = useTransform(scrollYProgress, [0, 1], disableAnimation ? [0, 0] : [0, 20]);
+  const scale = useTransform(scrollYProgress, [0, 1], disableAnimation ? [1, 1] : scaleDimensions());
+  const translate = useTransform(scrollYProgress, [0, 1], disableAnimation ? [0, 0] : [0, -50]);
 
   return (
     <div
@@ -47,7 +52,7 @@ export const ContainerScroll = ({
       <div
         className="w-full relative"
         style={{
-          perspective: isMobile ? "none" : "1200px",
+          perspective: disableAnimation ? "none" : "1200px",
         }}
       >
         {titleComponent && <Header translate={translate} titleComponent={titleComponent} />}
