@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
-import { useIsMobile } from '@/hooks/useIsMobile';
+import { useIsMobile, useCanRenderSVGFilter } from '@/hooks/useIsMobile';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -11,6 +11,7 @@ export default function Navbar() {
   const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
   const isMobile = useIsMobile();
+  const canRenderSVGFilter = useCanRenderSVGFilter();
   const isProgrammaticScroll = useRef(false);
   const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -150,7 +151,7 @@ export default function Navbar() {
           className="absolute inset-0 z-0 overflow-hidden rounded-[inherit]"
           style={{
             backdropFilter: isScrolled ? "blur(16px) saturate(140%)" : "blur(14px) saturate(130%)",
-            filter: isMobile ? "none" : "url(#glass-distortion)",
+            filter: canRenderSVGFilter ? "url(#glass-distortion)" : "none",
             isolation: "isolate",
           }}
         />

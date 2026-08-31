@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Briefcase, Users, ChevronDown } from 'lucide-react';
 import type { Experience } from '@/types/database';
+import { useCanRenderSVGFilter } from '@/hooks/useIsMobile';
 
 export const ExperienceContainer = ({ experiences }: { experiences: Experience[] }) => {
+  const canRenderSVGFilter = useCanRenderSVGFilter();
   const [activeTab, setActiveTab] = useState<'work' | 'organization'>('work');
   const [expandedIds, setExpandedIds] = useState<string[]>([]);
   const [isHovered, setIsHovered] = useState(false);
@@ -92,7 +94,7 @@ export const ExperienceContainer = ({ experiences }: { experiences: Experience[]
                       style={{
                         background: "linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.3) 100%)",
                         backdropFilter: "blur(12px) saturate(160%)",
-                        filter: "url(#glass-distortion)",
+                        filter: canRenderSVGFilter ? "url(#glass-distortion)" : "none",
                         boxShadow: "inset 0 1px 1px rgba(255,255,255,1)"
                       }}
                     />
