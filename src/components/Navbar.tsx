@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -9,6 +10,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
+  const isMobile = useIsMobile();
   const isProgrammaticScroll = useRef(false);
   const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -133,7 +135,9 @@ export default function Navbar() {
         onMouseLeave={() => setIsHovered(false)}
         className="fixed top-0 left-1/2 w-[95%] max-w-5xl z-50 rounded-[24px] px-6 py-3 flex items-center justify-between transition-all duration-700 hover:w-[99%] hover:px-8 hover:py-4 hover:rounded-[32px]"
         style={{
-          transform: `translate(-50%, ${isScrolled ? (isHovered ? '0.75rem' : '1rem') : (isHovered ? '1.25rem' : '1.5rem')}) scale(${isHovered ? 1.01 : 1})`,
+          transform: isMobile 
+            ? `translate(-50%, ${isScrolled ? '0.75rem' : '1.5rem'})` 
+            : `translate(-50%, ${isScrolled ? (isHovered ? '0.75rem' : '1rem') : (isHovered ? '1.25rem' : '1.5rem')}) scale(${isHovered ? 1.01 : 1})`,
           transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)",
           border: '1px solid rgba(0, 22, 25, 0.12)',
           boxShadow: isScrolled 
@@ -146,7 +150,7 @@ export default function Navbar() {
           className="absolute inset-0 z-0 overflow-hidden rounded-[inherit]"
           style={{
             backdropFilter: isScrolled ? "blur(16px) saturate(140%)" : "blur(14px) saturate(130%)",
-            filter: "url(#glass-distortion)",
+            filter: isMobile ? "none" : "url(#glass-distortion)",
             isolation: "isolate",
           }}
         />
@@ -236,8 +240,8 @@ export default function Navbar() {
                 className="absolute inset-0 rounded-3xl pointer-events-none"
                 style={{
                   background: 'rgba(255, 255, 255, 0.45)',
-                  backdropFilter: 'blur(32px) saturate(180%)',
-                  WebkitBackdropFilter: 'blur(32px) saturate(180%)',
+                  backdropFilter: 'blur(16px) saturate(140%)',
+                  WebkitBackdropFilter: 'blur(16px) saturate(140%)',
                   boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.5), inset 0 -1px 1px rgba(0,0,0,0.1), 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08)',
                 }}
               />

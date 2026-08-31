@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import type { Profile } from '@/types/database';
 import { ContainerScroll } from '@/components/ui/container-scroll-animation';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 interface HeroProps {
   profile: Profile | null;
@@ -12,13 +13,15 @@ export const HeroSection = ({ profile }: HeroProps) => {
   const firstName = nameParts[0];
   const lastName = nameParts.slice(1).join(' ');
 
+  const isMobile = useIsMobile();
+
   return (
     <section id="profile" className="relative left-1/2 right-1/2 -mx-[50vw] w-screen overflow-hidden bg-gradient-to-b from-white via-[#A5E3E9] to-white">
       
       {/* Decorative Glowing Orbs behind the glass */}
-      <div className="absolute top-[15%] left-[10%] w-[40rem] h-[40rem] bg-[#50E8F4]/40 rounded-full mix-blend-multiply filter blur-[100px] animate-pulse" style={{ animationDuration: '6s' }} />
-      <div className="absolute bottom-[20%] right-[5%] w-[45rem] h-[45rem] bg-[#34D399]/30 rounded-full mix-blend-multiply filter blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
-      <div className="absolute top-[30%] left-[40%] w-[35rem] h-[35rem] bg-[#818CF8]/20 rounded-full mix-blend-multiply filter blur-[100px] animate-pulse" style={{ animationDuration: '10s' }} />
+      <div className="absolute top-[15%] left-[10%] w-[40rem] h-[40rem] bg-[#50E8F4]/40 rounded-full mix-blend-multiply filter blur-2xl md:blur-[100px] md:animate-pulse" style={{ animationDuration: '6s' }} />
+      <div className="absolute bottom-[20%] right-[5%] w-[45rem] h-[45rem] bg-[#34D399]/30 rounded-full mix-blend-multiply filter blur-2xl md:blur-[120px] md:animate-pulse" style={{ animationDuration: '8s' }} />
+      <div className="absolute top-[30%] left-[40%] w-[35rem] h-[35rem] bg-[#818CF8]/20 rounded-full mix-blend-multiply filter blur-2xl md:blur-[100px] md:animate-pulse" style={{ animationDuration: '10s' }} />
 
       {/* Endless Scrolling Tech Grid */}
       <style>{`
@@ -28,7 +31,7 @@ export const HeroSection = ({ profile }: HeroProps) => {
         }
       `}</style>
       <div 
-        className="absolute inset-0 pointer-events-none"
+        className="hidden md:block absolute inset-0 pointer-events-none"
         style={{ 
           maskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 80%, transparent 100%)", 
           WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 80%, transparent 100%)" 
@@ -60,11 +63,11 @@ export const HeroSection = ({ profile }: HeroProps) => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 flex flex-col items-center justify-center min-h-[90vh]">
       {/* Decorative blobs behind the glass */}
-      <div className="absolute top-[20%] left-[10%] w-72 h-72 bg-[#50E8F4]/30 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-pulse" />
-      <div className="absolute bottom-[20%] right-[10%] w-96 h-96 bg-[#99E1D9]/30 rounded-full mix-blend-multiply filter blur-[100px] opacity-70" />
+      <div className="absolute top-[20%] left-[10%] w-72 h-72 bg-[#50E8F4]/30 rounded-full mix-blend-multiply filter blur-xl md:blur-[80px] opacity-70 md:animate-pulse" />
+      <div className="absolute bottom-[20%] right-[10%] w-96 h-96 bg-[#99E1D9]/30 rounded-full mix-blend-multiply filter blur-xl md:blur-[100px] opacity-70" />
 
       <ContainerScroll>
-        <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1400px] mx-auto gap-16 lg:gap-12 bg-white/10 backdrop-blur-md border border-white/20 p-8 lg:p-16 rounded-[3rem] shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_rgba(0,0,0,0.05)] relative z-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1400px] mx-auto gap-16 lg:gap-12 bg-white/70 md:bg-white/10 md:backdrop-blur-md border border-white/20 p-8 lg:p-16 rounded-[3rem] shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_32px_rgba(0,0,0,0.05)] relative z-10">
           
           {/* Left: Text Content */}
           <motion.div 
@@ -131,7 +134,7 @@ export const HeroSection = ({ profile }: HeroProps) => {
 
             {/* Main Photo Card */}
             <motion.div 
-              animate={{ y: [0, -15, 0] }}
+              animate={isMobile ? {} : { y: [0, -15, 0] }}
               transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
               className="w-full aspect-[3/4] rounded-[2rem] bg-[#001619] overflow-hidden shadow-2xl relative rotate-3 hover:rotate-0 transition-transform duration-500"
             >

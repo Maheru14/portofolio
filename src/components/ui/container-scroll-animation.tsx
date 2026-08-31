@@ -35,8 +35,8 @@ export const ContainerScroll = ({
   };
 
   // Start flat (0), tilt away (15) as we scroll down
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, 20]);
-  const scale = useTransform(scrollYProgress, [0, 1], scaleDimensions());
+  const rotate = useTransform(scrollYProgress, [0, 1], isMobile ? [0, 0] : [0, 20]);
+  const scale = useTransform(scrollYProgress, [0, 1], isMobile ? [1, 1] : scaleDimensions());
   const translate = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   return (
@@ -47,7 +47,7 @@ export const ContainerScroll = ({
       <div
         className="w-full relative"
         style={{
-          perspective: "1200px",
+          perspective: isMobile ? "none" : "1200px",
         }}
       >
         {titleComponent && <Header translate={translate} titleComponent={titleComponent} />}
