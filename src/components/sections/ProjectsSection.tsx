@@ -1,7 +1,30 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, ExternalLink, Code2 } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Code2 } from 'lucide-react';
 import type { Project } from '@/types/database';
+
+const getTechIcon = (tech: string) => {
+  const map: Record<string, string> = {
+    'React': 'react',
+    'React 19': 'react',
+    'Node.js': 'nodedotjs',
+    'PostgreSQL': 'postgresql',
+    'Stripe': 'stripe',
+    'Tailwind CSS': 'tailwindcss',
+    'Tailwind CSS v4': 'tailwindcss',
+    'TypeScript': 'typescript',
+    'Supabase': 'supabase',
+    'Framer Motion': 'framermotion',
+    'Python': 'python',
+    'FastAPI': 'fastapi',
+    'OpenAI': 'openai',
+    'Vite': 'vite'
+  };
+  const slug = map[tech] || tech.toLowerCase().replace(/[^a-z0-9]/g, '');
+  // Adding color matching the text color #001619 or leaving it for original color.
+  // Using default colors by not providing color in the URL.
+  return `https://cdn.simpleicons.org/${slug}`;
+};
 
 export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -24,7 +47,7 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
     <section id="projects" className="w-full scroll-mt-32 relative">
       <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
         <h2 className="display-font text-[2.5rem] md:text-[3.5rem] font-bold text-[#001619] leading-tight max-w-xl">
-          Up-To-Date And Fast Projects In One Place
+          Projects &amp; Works
         </h2>
       </div>
 
@@ -77,10 +100,18 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
                 
                 <div className="flex gap-3 flex-wrap mt-auto">
                   {project.tech_stack?.slice(0,4).map(tech => (
-                    <span key={tech} className="px-3 py-1.5 bg-[#F4F8F9] text-[#001619] text-xs font-bold rounded-lg">{tech}</span>
+                    <span key={tech} className="px-3 py-1.5 bg-[#F4F8F9] text-[#001619] text-xs font-bold rounded-lg flex items-center gap-1.5">
+                      <img 
+                        src={getTechIcon(tech)} 
+                        alt={tech} 
+                        className="w-3.5 h-3.5" 
+                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                      />
+                      {tech}
+                    </span>
                   ))}
                   {(project.tech_stack?.length || 0) > 4 && (
-                    <span className="px-3 py-1.5 bg-[#F4F8F9] text-[#001619]/50 text-xs font-bold rounded-lg">
+                    <span className="px-3 py-1.5 bg-[#F4F8F9] text-[#001619]/50 text-xs font-bold rounded-lg flex items-center">
                       +{(project.tech_stack?.length || 0) - 4}
                     </span>
                   )}
@@ -243,7 +274,13 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
                   <div>
                     <div className="flex gap-2 flex-wrap">
                       {selectedProject.tech_stack?.map(tech => (
-                        <span key={tech} className="px-3 py-1.5 bg-[#F4F8F9] text-[#001619] text-sm font-bold rounded-xl border border-[#001619]/5">
+                        <span key={tech} className="px-3 py-1.5 bg-[#F4F8F9] text-[#001619] text-sm font-bold rounded-xl border border-[#001619]/5 flex items-center gap-2">
+                          <img 
+                            src={getTechIcon(tech)} 
+                            alt={tech} 
+                            className="w-4 h-4" 
+                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                          />
                           {tech}
                         </span>
                       ))}

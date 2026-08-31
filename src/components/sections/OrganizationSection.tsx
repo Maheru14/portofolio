@@ -46,7 +46,7 @@ export const OrganizationSection = ({ organizations }: { organizations: Experien
             </p>
 
             <div className="mt-auto pt-4 border-t border-[#99E1D9]/30 text-xs font-bold text-[#001619]/50 uppercase tracking-widest">
-              {new Date(org.start_date).getFullYear()} - {org.current ? 'Present' : (org.end_date ? new Date(org.end_date).getFullYear() : 'Present')}
+              {new Date(org.start_date).getFullYear()} - {!org.end_date ? 'Present' : new Date(org.end_date).getFullYear()}
             </div>
           </motion.div>
         ))}

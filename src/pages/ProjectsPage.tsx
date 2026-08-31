@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FolderGit2, Search } from 'lucide-react';
+import { FolderGit2 } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
 import GlassCard from '../components/GlassCard';
 import type { Project } from '../types/database';

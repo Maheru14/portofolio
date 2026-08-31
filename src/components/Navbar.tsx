@@ -7,9 +7,10 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('#profile');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
   const isProgrammaticScroll = useRef(false);
-  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+  const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -76,56 +77,90 @@ export default function Navbar() {
       {/* SVG Definitions for Liquid Glass Distortion */}
       <svg className="hidden">
         <defs>
-          <filter id="liquid-glass">
-            <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" seed="2" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" />
+          <filter
+            id="glass-distortion"
+            x="0%"
+            y="0%"
+            width="100%"
+            height="100%"
+            filterUnits="objectBoundingBox"
+          >
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.001 0.005"
+              numOctaves="1"
+              seed="17"
+              result="turbulence"
+            />
+            <feComponentTransfer in="turbulence" result="mapped">
+              <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
+              <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
+              <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
+            </feComponentTransfer>
+            <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
+            <feSpecularLighting
+              in="softMap"
+              surfaceScale="5"
+              specularConstant="1"
+              specularExponent="100"
+              lightingColor="white"
+              result="specLight"
+            >
+              <fePointLight x="-200" y="-200" z="300" />
+            </feSpecularLighting>
+            <feComposite
+              in="specLight"
+              operator="arithmetic"
+              k1="0"
+              k2="1"
+              k3="1"
+              k4="0"
+              result="litImage"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="softMap"
+              scale="200"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
           </filter>
         </defs>
       </svg>
 
-      <motion.nav 
-        className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl z-50 rounded-[24px] px-6 py-3 flex items-center justify-between"
-        animate={{ 
-          scale: 1,
-          width: "95%",
-          paddingTop: "0.75rem",
-          paddingBottom: "0.75rem",
-          y: isScrolled ? "1rem" : "1.5rem"
+      <nav 
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="fixed top-0 left-1/2 w-[95%] max-w-5xl z-50 rounded-[24px] px-6 py-3 flex items-center justify-between transition-all duration-700 hover:w-[99%] hover:px-8 hover:py-4 hover:rounded-[32px]"
+        style={{
+          transform: `translate(-50%, ${isScrolled ? (isHovered ? '0.75rem' : '1rem') : (isHovered ? '1.25rem' : '1.5rem')}) scale(${isHovered ? 1.01 : 1})`,
+          transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)",
+          border: '1px solid rgba(0, 22, 25, 0.12)',
+          boxShadow: isScrolled 
+            ? '0 12px 40px rgba(0, 22, 25, 0.15), 0 4px 12px rgba(0, 22, 25, 0.1), 0 1px 3px rgba(0, 22, 25, 0.08)'
+            : '0 8px 32px rgba(0, 22, 25, 0.12), 0 2px 8px rgba(0, 22, 25, 0.08), 0 1px 2px rgba(0, 22, 25, 0.06)'
         }}
-        whileHover={{ 
-          scale: 1.04, 
-          width: ["95%", "99%", "97.5%"],
-          paddingTop: ["0.75rem", "1.5rem", "1.15rem"],
-          paddingBottom: ["0.75rem", "1.5rem", "1.15rem"],
-          y: isScrolled ? ["1rem", "0.25rem", "0.6rem"] : ["1.5rem", "0.75rem", "1.1rem"],
-          transition: { duration: 1.5, ease: [0.33, 1, 0.68, 1], times: [0, 0.5, 1] }
-        }}
-        transition={{ duration: 0.5, ease: [0.33, 1, 0.68, 1] }}
       >
-        {/* Glass Layer */}
-        <div 
-          className="absolute inset-0 rounded-[24px] pointer-events-none transition-all duration-500 ease-out border border-white/20"
+        {/* Glass Layers */}
+        <div
+          className="absolute inset-0 z-0 overflow-hidden rounded-[inherit]"
           style={{
-            boxShadow: 'inset 0 2.5px 0 rgba(255,255,255,1), inset 0 6px 8px rgba(255,255,255,0.3), inset 0 -1px 1px rgba(0,0,0,0.1), 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08)',
+            backdropFilter: isScrolled ? "blur(16px) saturate(140%)" : "blur(14px) saturate(130%)",
+            filter: "url(#glass-distortion)",
+            isolation: "isolate",
           }}
-        >
-          {/* WebKit Clipping Hack Layer */}
-          <div 
-            className="absolute inset-0 rounded-[24px] overflow-hidden"
-            style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
-          >
-            {/* Oversized Inner Layer to hide SVG filter wobbly edges */}
-            <div 
-              className="absolute -inset-[24px]"
-              style={{
-                background: 'rgba(255, 255, 255, 0.45)',
-                backdropFilter: 'blur(24px) saturate(150%)',
-                WebkitBackdropFilter: 'blur(24px) saturate(150%)',
-                filter: 'url(#liquid-glass)',
-              }}
-            />
-          </div>
-        </div>
+        />
+        <div
+          className="absolute inset-0 z-10 rounded-[inherit]"
+          style={{ background: "linear-gradient(135deg, rgba(200, 248, 254, 0.15), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.35), rgba(200, 248, 254, 0.08))" }}
+        />
+        <div
+          className="absolute inset-0 z-20 rounded-[inherit] overflow-hidden pointer-events-none"
+          style={{
+            boxShadow:
+              "inset 0 1px 0 0 rgba(255, 255, 255, 0.8), inset 0 -1px 2px 0 rgba(0, 22, 25, 0.06)",
+          }}
+        />
 
         {/* Content Layer */}
         <div className={`relative z-10 flex items-center justify-between w-full transition-all duration-500 ease-out`}>
@@ -225,7 +260,7 @@ export default function Navbar() {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.nav>
+      </nav>
     </>
   );
 }

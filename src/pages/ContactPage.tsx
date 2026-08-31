@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Send, ArrowUpRight, MessageSquare, Mail } from 'lucide-react';
+import { Send, ArrowUpRight, MessageSquare } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
 import GlassCard from '../components/GlassCard';
 import type { SocialLink } from '../types/database';
 import { getSocialLinks } from '../lib/supabase';
 import { isSupabaseConfigured, demoSocialLinks } from '../lib/demoData';
-import { getPlatformIcon, getPlatformLabel, getPlatformColor } from '../lib/platformUtils';
+import { getPlatformIcon, getPlatformLabel } from '../lib/platformUtils';
 
 export default function ContactPage() {
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Lock, Mail, Eye, EyeOff, AlertCircle, ArrowLeft, ShieldCheck, Sparkles } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, AlertCircle, ArrowLeft } from 'lucide-react';
 import { signIn } from '../../lib/supabase';
 
 export default function LoginPage() {

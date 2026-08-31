@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef } from "react";
-import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
+import { useScroll, useTransform, motion, type MotionValue } from "framer-motion";
 
 export const ContainerScroll = ({
   titleComponent,
@@ -75,11 +75,12 @@ export const Header = ({ translate, titleComponent }: any) => {
 export const Card = ({
   rotate,
   scale,
+  translate: _translate,
   children,
 }: {
   rotate: MotionValue<number>;
   scale: MotionValue<number>;
-  translate: MotionValue<number>;
+  translate?: MotionValue<number>;
   children: React.ReactNode;
 }) => {
   return (

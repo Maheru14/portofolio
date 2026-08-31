@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Briefcase, Users, ChevronDown, ChevronUp } from 'lucide-react';
+import { Briefcase, Users, ChevronDown } from 'lucide-react';
 import type { Experience } from '@/types/database';
 
 export const ExperienceContainer = ({ experiences }: { experiences: Experience[] }) => {
   const [activeTab, setActiveTab] = useState<'work' | 'organization'>('work');
   const [expandedIds, setExpandedIds] = useState<string[]>([]);
+  const [isHovered, setIsHovered] = useState(false);
 
   const toggleExpand = (id: string) => {
     setExpandedIds(prev => 
@@ -45,7 +46,14 @@ export const ExperienceContainer = ({ experiences }: { experiences: Experience[]
 
   return (
     <section id="experience" className="w-full scroll-mt-32">
-      <div className="w-full bg-white rounded-[40px] p-8 md:p-16 shadow-sm border border-[#001619]/5">
+      <div className="relative w-full bg-white/60 backdrop-blur-3xl rounded-[40px] p-8 md:p-16 shadow-[0_30px_60px_-15px_rgba(0,22,25,0.1),0_10px_30px_-10px_rgba(0,22,25,0.05),inset_0_1px_2px_rgba(255,255,255,1)] border border-[#001619]/10 overflow-hidden">
+        
+        {/* Decorative Background Blobs for the Outer Card */}
+        <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] rounded-full bg-gradient-to-br from-[#50E8F4]/30 to-[#C7F8FE]/20 blur-[100px] pointer-events-none -z-10" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[50%] h-[50%] rounded-full bg-gradient-to-tr from-[#99E1D9]/30 to-transparent blur-[120px] pointer-events-none -z-10" />
+
+        {/* Subtle Grid Overlay */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMCwgMjIsIDI1LCAwLjA0KSIvPjwvc3ZnPg==')] opacity-40 pointer-events-none -z-10" />
         
         {/* Header & Tabs */}
         <div className="flex flex-col items-center text-center mb-16 gap-8">
@@ -53,7 +61,15 @@ export const ExperienceContainer = ({ experiences }: { experiences: Experience[]
             Professional & Organizational Experience
           </h2>
           
-          <div className="flex p-1.5 bg-[#F4F8F9] rounded-full w-max relative shadow-inner border border-[#001619]/5">
+          <div 
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="flex p-1.5 hover:p-2 bg-[#F4F8F9]/60 backdrop-blur-md saturate-150 rounded-full w-max relative shadow-[inset_0_1px_2px_rgba(255,255,255,1),inset_0_-1px_1px_rgba(0,22,25,0.05),0_4px_15px_rgba(0,22,25,0.05)] border border-[#001619]/10 transition-all duration-700"
+            style={{
+              transform: `scale(${isHovered ? 1.02 : 1})`,
+              transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)",
+            }}
+          >
             {(['work', 'organization'] as const).map((tab) => (
               <button
                 key={tab}
@@ -68,9 +84,19 @@ export const ExperienceContainer = ({ experiences }: { experiences: Experience[]
                 {activeTab === tab && (
                   <motion.div
                     layoutId="experienceTab"
-                    className="absolute inset-0 bg-white rounded-full -z-10 shadow-[0_2px_15px_rgba(0,22,25,0.08)] border border-[#001619]/5"
-                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                  />
+                    className="absolute inset-0 rounded-full -z-10 overflow-hidden border border-white/80 shadow-[inset_0_2px_4px_rgba(255,255,255,1),inset_0_-2px_4px_rgba(0,22,25,0.15),0_8px_16px_rgba(0,22,25,0.12),0_2px_4px_rgba(0,22,25,0.08)]"
+                    transition={{ type: "spring", stiffness: 150, damping: 12, mass: 0.8 }}
+                  >
+                    <div 
+                      className="absolute inset-0"
+                      style={{
+                        background: "linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.3) 100%)",
+                        backdropFilter: "blur(12px) saturate(160%)",
+                        filter: "url(#glass-distortion)",
+                        boxShadow: "inset 0 1px 1px rgba(255,255,255,1)"
+                      }}
+                    />
+                  </motion.div>
                 )}
                 <span className="relative z-20 flex items-center gap-2">
                   {tab === 'work' ? (

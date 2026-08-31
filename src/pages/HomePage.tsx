@@ -29,7 +29,7 @@ export default function HomePage() {
           setProjects(proj && proj.length > 0 ? proj : demoProjects);
           setExperiences(exp && exp.length > 0 ? exp : demoExperiences);
           setSocialLinks(links && links.length > 0 ? links : demoSocialLinks);
-        } catch (err) {
+        } catch {
           setProfile(demoProfile);
           setProjects(demoProjects);
           setExperiences(demoExperiences);

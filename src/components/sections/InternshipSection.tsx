@@ -27,7 +27,7 @@ export const InternshipSection = ({ internships }: { internships: Experience[] }
             className="relative"
           >
             {/* Timeline Dot */}
-            <div className={`absolute -left-[41px] md:-left-[57px] top-1 w-5 h-5 rounded-full border-4 border-white ${job.current ? 'bg-[#50E8F4]' : 'bg-[#99E1D9]'}`} />
+            <div className={`absolute -left-[41px] md:-left-[57px] top-1 w-5 h-5 rounded-full border-4 border-white ${!job.end_date ? 'bg-[#50E8F4]' : 'bg-[#99E1D9]'}`} />
             
             <div className="flex flex-col md:flex-row gap-4 md:gap-8 md:items-start">
               
@@ -36,7 +36,7 @@ export const InternshipSection = ({ internships }: { internships: Experience[] }
                 <span className="text-sm font-bold text-[#001619]/50 uppercase tracking-widest">
                   {new Date(job.start_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                   {' — '}
-                  {job.current ? 'Present' : (job.end_date ? new Date(job.end_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Present')}
+                  {!job.end_date ? 'Present' : new Date(job.end_date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                 </span>
               </div>
 

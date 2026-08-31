@@ -4,7 +4,7 @@ import type { SocialLink, Profile } from '@/types/database';
 
 import { getPlatformIcon, getPlatformLabel } from '@/lib/platformUtils';
 
-export const ContactSection = ({ socialLinks, profile }: { socialLinks: SocialLink[], profile: Profile | null }) => {
+export const ContactSection = ({ socialLinks, profile: _profile }: { socialLinks: SocialLink[], profile?: Profile | null }) => {
   const [formData, setFormData] = useState({ email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
