@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, type ReactNode } from 'react';
+import { useCanRenderSVGFilter } from '@/hooks/useIsMobile';
 
 interface GlowCardProps {
   children?: ReactNode;
@@ -35,6 +36,7 @@ const GlowCard: React.FC<GlowCardProps> = ({
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
+  const canRenderSVGFilter = useCanRenderSVGFilter();
 
   useEffect(() => {
     const syncPointer = (e: PointerEvent) => {
@@ -174,7 +176,7 @@ const GlowCard: React.FC<GlowCardProps> = ({
           shadow-[0_1rem_2rem_-1rem_black] 
           p-4 
           gap-4 
-          backdrop-blur-[5px]
+          ${canRenderSVGFilter ? 'backdrop-blur-[5px]' : 'bg-white/40'}
           ${className}
         `}
       >

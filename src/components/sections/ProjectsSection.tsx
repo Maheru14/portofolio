@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Code2 } from 'lucide-react';
 import type { Project } from '@/types/database';
+import { useCanRenderSVGFilter } from '@/hooks/useIsMobile';
 
 const getTechIcon = (tech: string) => {
   const map: Record<string, string> = {
@@ -27,6 +28,7 @@ const getTechIcon = (tech: string) => {
 };
 
 export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
+  const canRenderSVGFilter = useCanRenderSVGFilter();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
@@ -73,7 +75,7 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
             >
               {/* Morphing Background */}
               <motion.div 
-                layoutId={`project-bg-${project.id}`}
+                layoutId={canRenderSVGFilter ? `project-bg-${project.id}` : undefined}
                 className="absolute inset-0 bg-white rounded-[32px] z-0"
               />
 
@@ -119,14 +121,14 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
               </div>
 
               {/* Right/Bottom: Graphic Area */}
-              <motion.div layoutId={`project-image-container-${project.id}`} className="w-full md:w-[48%] min-h-[260px] md:min-h-[340px] bg-gradient-to-br from-[#F4F8F9] to-[#E8F2F4] flex items-center justify-center p-6 md:p-8 overflow-hidden relative shrink-0">
+              <motion.div layoutId={canRenderSVGFilter ? `project-image-container-${project.id}` : undefined} className="w-full md:w-[48%] min-h-[260px] md:min-h-[340px] bg-gradient-to-br from-[#F4F8F9] to-[#E8F2F4] flex items-center justify-center p-6 md:p-8 overflow-hidden relative shrink-0">
                 {/* Decorative glowing background elements */}
-                <div className="hidden md:block absolute top-0 right-0 w-48 h-48 bg-[#50E8F4]/20 rounded-full bg-blob-medium transform translate-x-1/3 -translate-y-1/3 transition-transform duration-700 group-hover:scale-150" />
-                <div className="hidden md:block absolute bottom-0 left-0 w-48 h-48 bg-[#99E1D9]/20 rounded-full bg-blob-medium transform -translate-x-1/3 translate-y-1/3 transition-transform duration-700 group-hover:scale-150" />
+                <div className={`hidden md:block absolute top-0 right-0 w-48 h-48 rounded-full transform translate-x-1/3 -translate-y-1/3 transition-transform duration-700 group-hover:scale-150 ${canRenderSVGFilter ? 'bg-[#50E8F4]/20 bg-blob-medium' : ''}`} style={!canRenderSVGFilter ? { background: 'radial-gradient(circle, rgba(80,232,244,0.2) 0%, transparent 60%)' } : undefined} />
+                <div className={`hidden md:block absolute bottom-0 left-0 w-48 h-48 rounded-full transform -translate-x-1/3 translate-y-1/3 transition-transform duration-700 group-hover:scale-150 ${canRenderSVGFilter ? 'bg-[#99E1D9]/20 bg-blob-medium' : ''}`} style={!canRenderSVGFilter ? { background: 'radial-gradient(circle, rgba(153,225,217,0.2) 0%, transparent 60%)' } : undefined} />
 
                 <div className="relative z-10 w-full h-full max-h-[300px] bg-white rounded-2xl md:rounded-[22px] shadow-[0_8px_30px_rgba(0,22,25,0.06)] border border-[#001619]/5 overflow-hidden flex items-center justify-center transform transition-transform duration-500 group-hover:scale-[1.02]">
                   {primaryImage ? (
-                    <motion.img layoutId={`project-img-${project.id}-0`} src={primaryImage} alt={project.title} className="w-full h-full object-cover object-center" />
+                    <motion.img layoutId={canRenderSVGFilter ? `project-img-${project.id}-0` : undefined} src={primaryImage} alt={project.title} className="w-full h-full object-cover object-center" />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-[#C7F8FE]/30 to-[#99E1D9]/20 flex items-center justify-center p-6">
                       <span className="text-[#001619]/30 font-bold display-font text-xl text-center">{project.title}</span>
@@ -150,7 +152,7 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setSelectedId(null)}
-                className="absolute inset-0 glass-overlay-dark"
+                className={`absolute inset-0 ${canRenderSVGFilter ? 'glass-overlay-dark' : 'bg-[#001619]/80'}`}
               />
 
             {/* Expanded Card */}
@@ -158,7 +160,7 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
               
               {/* Morphing Background */}
               <motion.div 
-                layoutId={`project-bg-${selectedProject.id}`}
+                layoutId={canRenderSVGFilter ? `project-bg-${selectedProject.id}` : undefined}
                 className="absolute inset-0 bg-white rounded-[32px] md:rounded-[40px] shadow-2xl border border-white/50"
               />
 
@@ -197,10 +199,10 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
                 <div className="max-w-4xl mx-auto flex flex-col gap-10">
                   
                   {/* Gallery */}
-                  <motion.div layoutId={`project-image-container-${selectedProject.id}`} className="relative w-full bg-gradient-to-br from-[#F4F8F9] to-[#E8F2F4] rounded-[24px] md:rounded-[32px] overflow-hidden p-3 md:p-5">
+                  <motion.div layoutId={canRenderSVGFilter ? `project-image-container-${selectedProject.id}` : undefined} className="relative w-full bg-gradient-to-br from-[#F4F8F9] to-[#E8F2F4] rounded-[24px] md:rounded-[32px] overflow-hidden p-3 md:p-5">
                     {/* Decorative glowing background elements */}
-                    <div className="hidden md:block absolute top-0 right-0 w-64 h-64 bg-[#50E8F4]/20 rounded-full bg-blob-medium transform translate-x-1/4 -translate-y-1/4" />
-                    <div className="hidden md:block absolute bottom-0 left-0 w-64 h-64 bg-[#99E1D9]/20 rounded-full bg-blob-medium transform -translate-x-1/4 translate-y-1/4" />
+                    <div className={`hidden md:block absolute top-0 right-0 w-64 h-64 rounded-full transform translate-x-1/4 -translate-y-1/4 ${canRenderSVGFilter ? 'bg-[#50E8F4]/20 bg-blob-medium' : ''}`} style={!canRenderSVGFilter ? { background: 'radial-gradient(circle, rgba(80,232,244,0.2) 0%, transparent 60%)' } : undefined} />
+                    <div className={`hidden md:block absolute bottom-0 left-0 w-64 h-64 rounded-full transform -translate-x-1/4 translate-y-1/4 ${canRenderSVGFilter ? 'bg-[#99E1D9]/20 bg-blob-medium' : ''}`} style={!canRenderSVGFilter ? { background: 'radial-gradient(circle, rgba(153,225,217,0.2) 0%, transparent 60%)' } : undefined} />
 
                     <div className="relative z-10 aspect-video w-full rounded-[16px] md:rounded-[24px] overflow-hidden bg-white shadow-sm border border-[#001619]/5 group">
                       
@@ -231,13 +233,13 @@ export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
                               <>
                                 <button 
                                   onClick={(e) => { e.stopPropagation(); setActiveImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1); }}
-                                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center text-[#001619] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white shadow-lg"
+                                  className={`absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-[#001619] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white shadow-lg ${canRenderSVGFilter ? 'bg-white/80 backdrop-blur-md' : 'bg-white'}`}
                                 >
                                   <ChevronLeft size={20} />
                                 </button>
                                 <button 
                                   onClick={(e) => { e.stopPropagation(); setActiveImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1); }}
-                                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center text-[#001619] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white shadow-lg"
+                                  className={`absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-[#001619] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white shadow-lg ${canRenderSVGFilter ? 'bg-white/80 backdrop-blur-md' : 'bg-white'}`}
                                 >
                                   <ChevronRight size={20} />
                                 </button>

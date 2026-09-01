@@ -150,7 +150,8 @@ export default function Navbar() {
         <div
           className="absolute inset-0 z-0 overflow-hidden rounded-[inherit]"
           style={{
-            backdropFilter: isScrolled ? "blur(16px) saturate(140%)" : "blur(14px) saturate(130%)",
+            background: canRenderSVGFilter ? "transparent" : (isScrolled ? "rgba(255, 255, 255, 0.95)" : "rgba(255, 255, 255, 0.85)"),
+            backdropFilter: canRenderSVGFilter ? (isScrolled ? "blur(16px) saturate(140%)" : "blur(14px) saturate(130%)") : "none",
             filter: canRenderSVGFilter ? "url(#glass-distortion)" : "none",
             isolation: "isolate",
           }}
@@ -192,7 +193,7 @@ export default function Navbar() {
                   style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}
                 >
                   {/* Spotlight Hover & Active Background */}
-                  <div className={`absolute inset-0 rounded-xl transition-all duration-300 border backdrop-blur-md ${
+                  <div className={`absolute inset-0 rounded-xl transition-all duration-300 border ${canRenderSVGFilter ? 'backdrop-blur-md' : ''} ${
                     isActive 
                       ? 'bg-white/40 shadow-[inset_0_1.5px_0_rgba(255,255,255,0.9),inset_0_-1px_1px_rgba(0,22,25,0.1),0_4px_12px_rgba(0,22,25,0.05)] border-white/30' 
                       : 'bg-white/0 border-transparent group-hover:bg-white/20'
@@ -240,9 +241,9 @@ export default function Navbar() {
               <div 
                 className="absolute inset-0 rounded-3xl pointer-events-none"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.45)',
-                  backdropFilter: 'blur(16px) saturate(140%)',
-                  WebkitBackdropFilter: 'blur(16px) saturate(140%)',
+                  background: canRenderSVGFilter ? 'rgba(255, 255, 255, 0.45)' : 'rgba(255, 255, 255, 0.98)',
+                  backdropFilter: canRenderSVGFilter ? 'blur(16px) saturate(140%)' : 'none',
+                  WebkitBackdropFilter: canRenderSVGFilter ? 'blur(16px) saturate(140%)' : 'none',
                   boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.5), inset 0 -1px 1px rgba(0,0,0,0.1), 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08)',
                 }}
               />
@@ -253,7 +254,7 @@ export default function Navbar() {
                     key={link.name}
                     href={link.href}
                     onClick={(e) => handleScrollTo(e, link.href)}
-                    className={`relative z-10 px-4 py-3 text-lg font-semibold text-[#001619] rounded-xl transition-all border backdrop-blur-md ${
+                    className={`relative z-10 px-4 py-3 text-lg font-semibold text-[#001619] rounded-xl transition-all border ${canRenderSVGFilter ? 'backdrop-blur-md' : ''} ${
                       isActive ? 'bg-white/40 shadow-[inset_0_1.5px_0_rgba(255,255,255,0.9),inset_0_-1px_1px_rgba(0,22,25,0.1)] border-white/30' : 'border-transparent hover:bg-white/20'
                     }`}
                     style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}

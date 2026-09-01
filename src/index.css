@@ -74,15 +74,11 @@
 
   /* Chrome performance optimizations for heavy background blurs */
   .bg-blob-heavy {
-    filter: blur(24px);
-    will-change: transform;
-    transform: translateZ(0);
+    filter: blur(16px);
   }
   
   .bg-blob-medium {
-    filter: blur(16px);
-    will-change: transform;
-    transform: translateZ(0);
+    filter: blur(12px);
   }
 
   .glass-overlay-dark {
