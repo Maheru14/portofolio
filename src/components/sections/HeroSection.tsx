@@ -43,7 +43,7 @@ export const HeroSection = ({ profile }: HeroProps) => {
           style={{ 
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='16' cy='16' r='1.5' fill='%23001619' fill-opacity='0.8'/%3E%3Cpath d='M16 0v32M0 16h32' stroke='%23001619' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E")`,
             backgroundSize: '32px 32px',
-            animation: 'pan-grid 8s linear infinite',
+            animation: canRenderHeavyEffects ? 'pan-grid 8s linear infinite' : 'none',
             maskImage: `
               radial-gradient(circle at 15% 20%, black 0%, transparent 35%),
               radial-gradient(circle at 85% 30%, black 0%, transparent 45%),
@@ -129,7 +129,7 @@ export const HeroSection = ({ profile }: HeroProps) => {
             className="flex-1 w-full max-w-lg relative"
           >
             {/* Decorative floating dots (like the reference) */}
-            <div className="absolute top-10 left-10 w-4 h-4 bg-[#50E8F4] rounded-sm animate-pulse" />
+            <div className={`absolute top-10 left-10 w-4 h-4 bg-[#50E8F4] rounded-sm ${canRenderHeavyEffects ? 'animate-pulse' : ''}`} />
             <div className="absolute bottom-20 right-10 w-6 h-6 bg-[#C7F8FE] rounded-sm" />
             <div className="absolute -top-5 right-20 w-3 h-3 bg-[#001619] rounded-sm" />
 
